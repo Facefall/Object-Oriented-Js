@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta name="viewpoint" content="width-device-width,initial-scale-1.0">
+        <meta http-equiv="x-ua-compatible" content="ie-edge">
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+    <script>
+        // console.log(Number);
+        // console.log(Number.MAX_VALUE);
+        // console.log(Number.MIN_VALUE);
+        // console.log(Number.POSITIVE_INFINITY);
+        // console.log(Number.NEGATIVE_INFINITY);
+        // console.log(Number.NaN);
+        //let a = new Number(128.35);
+        console.log(a.toFixed());
+        //该方法返回一个字符串,以定点小数的形式来表示某一数字,并进行四舍五入
+        let n = new Number(Math.PI);
+        n.valueOf();
+        //3.1415926535859739
+        n.toFixed(3);
+        //3.142
+
+        n = new Number(56789);
+        n.toExponential(2);
+        //以指数形式来表示某一数字,并进行四舍五入
+        //5.68e+4
+
+        n = new Number(56789);
+        n.toPrecision(2);
+        //5.7e+4
+        n.toPrecision(5);
+        //56789
+        n.toPrecision(4);
+        //5.679e+4
+        n = new Number(Math.PI);
+        n.toPrecision(4);
+        //3.142
+    </script>
+    </body>
+</html>

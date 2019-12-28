@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta name="viewpoint" content="width-device-width,initial-scale-1.0">
+        <meta http-equiv="x-ua-compatible" content="ie-edge">
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+    <script>
+        //callee 返回函数a被调用的函数
+        //如果无其他函数调用本函数(在全局作用域内),则返回null
+        function a() {
+            return arguments.callee;
+        }
+        function b() {
+            console.log(a());
+        }
+        //b()
+
+        (function (count) {
+            if (count < 5){
+                console.log(count);
+                arguments.callee(count++);
+            }
+        })(1);
+        //1 2 3 4
+
+        //空字符串
+        //null
+        //undefined
+        //数字0
+        //数字NaN
+        //布尔值false
+        //以上六中统称为falsy
+        //其余值 称为 truthy
+        //包括 字符串"0","","false"
+
+    </script>
+    </body>
+</html>

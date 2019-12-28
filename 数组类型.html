@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta name="viewpoint" content="width-device-width,initial-scale-1.0">
+        <meta http-equiv="x-ua-compatible" content="ie-edge">
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+    <script>
+        let arr = new Array(1,3,2,9,5,4,10);
+        let temp = arr.push(11);
+        console.log(temp);
+
+        temp = arr.pop();
+        console.log(temp);
+        console.log(arr);
+
+        temp = arr.sort();
+        console.log(arr);
+        console.log(temp);
+        console.log(arr === temp);
+        console.log(arr == temp);
+
+        temp = arr.join("---");
+        console.log(arr);
+        console.log(temp);
+
+        temp = arr.slice(3,6);
+        console.log(arr);
+        console.log(temp);
+
+        temp = arr.splice(1,3);
+        console.log(arr);
+        console.log(temp);
+
+        temp = arr.concat(123);
+        console.log(arr);
+        console.log(temp);
+        //tips:可以手动设置数组数据类型的length属性
+        //变长的部分用undefined表示
+        //多余的部分则删除
+
+
+    </script>
+    </body>
+</html>

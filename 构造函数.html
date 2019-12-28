@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta name="viewpoint" content="width-device-width,initial-scale-1.0">
+        <meta http-equiv="x-ua-compatible" content="ie-edge">
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+    <script>
+        let o = {b:2};
+        console.log(o.constructor);
+        //Object()
+        //创建一个对象,调用的是object构造函数
+        function Haro() {
+
+        }
+        let a = new Haro();
+        console.log(a.constructor);
+        //Haro
+        if (a instanceof Haro) {
+            console.log(1);
+        }
+        else{
+            console.log(2);
+        }
+        //1
+        if (a instanceof Object) {
+            console.log(1);
+        }
+        else{
+            console.log(2);
+        }
+        //1
+        //自定义的构造函数,本质上还是通过Object 构造器函数创建对象的
+        //Object是js中所有对象的父级对象
+        let o_2 = {};
+        let o_3 = new Object();
+        console.log(o_2.valueOf() === o_3);//true
+
+        let array = [];
+        let array2 = new Array();
+        let array3 = new Array(1,2,3,'66');
+        let array4 = new Array(4);
+        console.log(array3);//[1,2,3,'66]
+        console.log(array4);//[undefined,undefined,undefined,undefined] 注意,奇怪地方
+
+        function Haro1() {
+            this.name = 'Ninja';
+        };
+        let b = Haro1();
+        console.log(typeof b);
+        //undefined
+        //原因: 这里没有使用new操作符,而原函数Haro1 并没有返回值,
+        //所以b是undefined
+
+        console.log(name);//Ninja
+        console.log(name === window.name);//true
+        //函数里的this指向全局对象
+        //全局对象:代码运行的宿主环境,在这里是浏览器环境,所以为window对象
+    </script>
+    </body>
+</html>
