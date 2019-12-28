@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta name="viewpoint" content="width-device-width,initial-scale-1.0">
+        <meta http-equiv="x-ua-compatible" content="ie-edge">
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+    <script>
+        let a = 'hello';
+        let b = new String("World");
+        console.log(typeof a);
+        //string
+        console.log(typeof b);
+        //Object
+
+        //所以string 对象的布尔值都是true ,称为truthy
+        console.log(Boolean(new String("")));
+        //true
+        //需要注意的几个函数
+        //String CharAt
+        //String.fromCharCode
+        a.charAt(2);
+        a.indexOf(2);
+        a.lastIndexOf(2);
+        //a.search()
+        //a.match()
+        //a.replace()
+        //a.substring()
+        //a.substr()
+        //a.concat()
+    </script>
+    </body>
+</html>
