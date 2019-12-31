@@ -25,8 +25,8 @@
 
         Human.prototype = monkey; // typeof monkey -> object  通过new Obejct() 创建出来的实体对象,写法还可以是 new Monkey(),line 35
         let developer = new Human();
-        console.log(typeof developer.__proto__);
-        console.log(typeof developer.prototype);//undefined
+        // console.log(typeof developer.__proto__);
+        // console.log(typeof developer.prototype);//undefined
 
 
         //_proto_是某个实体对象的属性 developer
@@ -34,14 +34,20 @@
 
         Human.prototype = new Monkey();
         let developer2 = new Human();
-        console.log(typeof developer2.__proto__);
-        console.log(typeof developer2.prototype);//undefined
+        // console.log(typeof developer2.__proto__);
+        // console.log(typeof developer2.prototype);//undefined
 
         //prototype是属于构造器函数的属性 Human,Monkey
 
-        console.log(typeof Human.prototype);
-        console.log(typeof Monkey.prototype);
+        // console.log(typeof Human.prototype);
+        // console.log(typeof Monkey.prototype);
 
+        //往上连接的方式:
+        console.log(developer.__proto__.constructor.prototype);
+        //developer.__proto__ 某个new出来的实例对象a
+        //a的constructor 构造器函数 function Object(){...}
+        //构造器函数的属性:原型prototype
+        console.log(typeof developer.__proto__.constructor.prototype);
     </script>
     </body>
 </html>
