@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta name="viewpoint" content="width-device-width,initial-scale-1.0">
+        <meta http-equiv="x-ua-compatible" content="ie-edge">
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+    <script>
+        let shape = {
+            type:"",
+            getType: function () {
+                return this.type;
+            }
+        };
+
+        function Triangle(a,b,c) {
+            this.a = a;
+            this.b = b;
+            this.c = c;
+            this.type = "Triangle";
+            this.constructor = Triangle;
+        }
+
+        Triangle.prototype = shape;
+        Triangle.prototype.getPerimeter = function () {
+            return (this.a+this.b+this.c);
+        };
+        let t = new Triangle(1,2,3);
+        window.t = t;
+        for (let item in t){
+            if (t.hasOwnProperty(item))
+                console.log(item);
+        };
+
+        //???
+        //[1,2,3,4,5,6,7,8].shuffle();
+    </script>
+    </body>
+</html>
