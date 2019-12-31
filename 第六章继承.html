@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta name="viewpoint" content="width-device-width,initial-scale-1.0">
+        <meta http-equiv="x-ua-compatible" content="ie-edge">
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+    <script>
+        //_proto_与prototype不同
+        //_proto_是某个实体对象的属性
+        //prototype是属于构造器函数的属性
+        var monkey = {
+            feeds:'bananas'
+        };
+
+        function Human() {
+            this.a = 1;
+        }
+        function Monkey(){
+
+        }
+
+
+        Human.prototype = monkey; // typeof monkey -> object  通过new Obejct() 创建出来的实体对象,写法还可以是 new Monkey(),line 35
+        let developer = new Human();
+        console.log(typeof developer.__proto__);
+        console.log(typeof developer.prototype);//undefined
+
+
+        //_proto_是某个实体对象的属性 developer
+
+
+        Human.prototype = new Monkey();
+        let developer2 = new Human();
+        console.log(typeof developer2.__proto__);
+        console.log(typeof developer2.prototype);//undefined
+
+        //prototype是属于构造器函数的属性 Human,Monkey
+
+        console.log(typeof Human.prototype);
+        console.log(typeof Monkey.prototype);
+
+    </script>
+    </body>
+</html>
