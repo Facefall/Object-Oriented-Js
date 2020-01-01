@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta name="viewpoint" content="width-device-width,initial-scale-1.0">
+        <meta http-equiv="x-ua-compatible" content="ie-edge">
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+    <script>
+        let my2 = new Triangle(5,10);
+        console.log(my2.toString());
+        //给子类添加了一个uber属性,让它指向父类的原型
+        //uber在德语中super(就像java一样)以次同义
+        //重写了Shape.toString()方法
+        function Triangle(side,height) {
+            this.side = side;
+            this.height = height;
+        }
+        function TwoDShape() {}
+        function Shape() {}
+        function F() {}
+
+        Shape.prototype.name = 'shape';
+        Shape.prototype.toString = function () {
+            let result = [];
+            if (this.constructor.uber){
+                result[result.length] = this.constructor.uber.toString();
+            }
+            result[result.length] = this.name;
+            return result.join(', ');
+        };
+
+        F.prototype = Shape.prototype;
+        let test2 = new F();
+        TwoDShape.prototype = test2;
+        TwoDShape.prototype.constructor = TwoDShape;
+        TwoDShape.prototype.uber = Shape.prototype;
+        TwoDShape.prototype.name = '2D Shape';
+
+        let F2 = function(){};
+        F2.prototype = TwoDShape.prototype;
+        let test = new F2();
+        Triangle.prototype = test;
+        Triangle.prototype.constructor = Triangle;
+        Triangle.uber = TwoDShape.prototype;
+        Triangle.prototype.name = 'Triangle';
+        Triangle.prototype.getArea = function(){
+            return this.side * this.height;
+        };
+
+        let my = new Triangle(5,10);
+        console.log(my.toString());
+    </script>
+    </body>
+</html>
