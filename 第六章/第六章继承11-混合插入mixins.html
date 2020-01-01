@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta name="viewpoint" content="width-device-width,initial-scale-1.0">
+        <meta http-equiv="x-ua-compatible" content="ie-edge">
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+    <script>
+        let twoD={
+            name:'2D shape',
+            dimensions:2
+        };
+
+        //寄生式继承
+        function triangle(s,h) {
+            let that = Object(twoD);
+            that.name = 'Triangle';
+            that.side = s;
+            that.height = h;
+            that.getArea = function () {
+                return this.side * this.height/2
+            };
+            return that;
+        }
+
+
+        //构造器借用
+        function Shape(id) {
+            this.id =id;
+        }
+        Shape.prototype.name = 'shape';
+        Shape.prototype.toString = function () {
+            return this.name;
+        };
+        function Triangle() {
+            Shape.apply(this,arguments)
+        }
+        Triangle.prototype.name = 'Triangle';
+
+        let t = new Triangle(101);
+        console.log(t.id);
+        console.log(t.toString());
+
+        Triangle.prototype = new Shape(101);
+        //Triangle.prototype.constructor = Triangle;
+        let t2 = new Triangle(202);
+        console.log(t2.id);             //202
+        console.log(t2.__proto__.id);   //101
+        delete t2.id;
+        console.log(t2.id);             //101
+
+
+        //shallow copy
+        function extendCopy(p) {
+            let c = {};
+            for (let i in p){
+                c[i] = p[i];
+            }
+            c.uber = p;
+            return c;
+        }
+        //deep copy    jquery较新版本中,通常采用深拷贝的形式
+        function deepCopy(p,c) {
+             c = c || {};
+            for (let i in p){
+                if (typeof p[i] === "object"){
+                    c[i] = (p[i].constructor === Array)?[]:{};
+                    deepCopy(p[i],c[i]);
+                }else{
+                    c[i] = p[i];
+                }
+            }
+            return c;
+        }
+
+        //这与extendCopy 浅拷贝原理基本相同
+        function object(o) {
+            let n;
+            function F() {}
+            F.prototype = o;
+            n = new F();
+            n.uber = o;
+            return n;
+        }
+
+        //对象o用于继承,stuff用于拷贝方法与属性
+        function objectPlus(o,stuff) {
+            let n ;
+            function F() {}
+            F.prototype = o;
+            n = new F();
+            n.uber = o;
+
+            for (let i in stuff){
+                n[i] = stuff[i];
+            }
+            return n;
+        }
+    </script>
+    </body>
+</html>
