@@ -21,15 +21,13 @@
         Shape.prototype.name = 'shape';
 
         F.prototype = Shape.prototype;
-        let test2 = new F();
-        TwoDShape.prototype = test2;
+        TwoDShape.prototype = new F();
         TwoDShape.prototype.constructor = TwoDShape;
         TwoDShape.prototype.name = '2D Shape';
 
         let F2 = function(){};
         F2.prototype = TwoDShape.prototype;
-        let test = new F2();
-        Triangle.prototype = test;
+        Triangle.prototype = new F2();
         Triangle.prototype.constructor = Triangle;
         Triangle.prototype.name = 'Triangle';
         Triangle.prototype.getArea = function(){
@@ -65,12 +63,6 @@
         console.log(my.__proto__.constructor);
         console.log(my.__proto__.__proto__.constructor);
         console.log(my.__proto__.__proto__.__proto__.constructor);
-
-        console.log(my.__proto__ === test);//true
-        console.log(my.__proto__.__proto__ === test2);//true
-        console.log(my.__proto__.__proto__.__proto__);//shape通过继承自谁? 这里并没有更改Shape的原型对象,创建函数通过文本标识发创建
-        let shape = my.__proto__.__proto__.__proto__;
-        console.log(shape.constructor.prototype.__proto__.constructor);//object
 
     </script>
     </body>
