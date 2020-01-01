@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta name="viewpoint" content="width-device-width,initial-scale-1.0">
+        <meta http-equiv="x-ua-compatible" content="ie-edge">
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+    <script>
+
+        //YUI 库中实现继承的方式
+        //YAHOO.lang.extend(Triangle,Shape);
+        function extend(Child,Parent) {
+            let F = function () {};
+            F.prototype = Parent.prototype;
+            Child.prototype = new F();
+            Child.prototype.constructor = Child;
+            Child.uber = Parent.prototype;
+        }
+
+        function Triangle(side,height) {
+            this.side = side;
+            this.height = height;
+        }
+        function TwoDShape() {}
+        function Shape() {}
+
+        Shape.prototype.name = 'shape';
+        Shape.prototype.toString = function () {
+            let result = [];
+            if (this.constructor.uber){
+                result[result.length] = this.constructor.uber.toString();
+            }
+            result[result.length] = this.name;
+            return result.join(', ');
+        };
+        TwoDShape.prototype.name = '2D Shape';
+        Triangle.prototype.name = 'Triangle';
+        Triangle.prototype.getArea = function(){
+            return this.side * this.height;
+        };
+
+
+        extend(TwoDShape,Shape);
+        extend(Triangle,TwoDShape);
+        let my = new Triangle(5,10);
+        console.log(my.toString());
+    </script>
+    </body>
+</html>
