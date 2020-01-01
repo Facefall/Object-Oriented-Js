@@ -13,6 +13,8 @@
             dimensions:2
         };
 
+
+
         //寄生式继承
         function triangle(s,h) {
             let that = Object(twoD);
@@ -25,8 +27,36 @@
             return that;
         }
 
+        //=============================================
 
         //构造器借用
+        // function Shape(id) {
+        //     this.id =id;
+        // }
+        // Shape.prototype.name = 'shape';
+        // Shape.prototype.toString = function () {
+        //     return this.name;
+        // };
+        // function Triangle() {
+        //     Shape.apply(this,arguments)
+        // }
+        // Triangle.prototype.name = 'Triangle';
+        //
+        // let t = new Triangle(101);
+        // console.log(t.id);
+        // console.log(t.toString());
+        //
+        // Triangle.prototype = new Shape(101);
+        // let t2 = new Triangle(202);
+        // console.log(t2.id);             //202
+        // console.log(t2.__proto__.id);   //101
+        // delete t2.id;
+        // console.log(t2.id);             //101
+
+        //=============================================
+
+        //改进
+        //借用构造器与原型复制
         function Shape(id) {
             this.id =id;
         }
@@ -34,23 +64,25 @@
         Shape.prototype.toString = function () {
             return this.name;
         };
+
         function Triangle() {
-            Shape.apply(this,arguments)
+            Shape.apply(this,arguments);
+            return this;
         }
+        extend2(Triangle,Shape);
         Triangle.prototype.name = 'Triangle';
 
-        let t = new Triangle(101);
-        console.log(t.id);
-        console.log(t.toString());
+        let t3 = new Triangle(101);
+        //console.log(t3);
+        console.log(t3.toString());
+        console.log(t3.id);
+        delete t3.id;
+        console.log(t3.id);
 
-        Triangle.prototype = new Shape(101);
-        //Triangle.prototype.constructor = Triangle;
-        let t2 = new Triangle(202);
-        console.log(t2.id);             //202
-        console.log(t2.__proto__.id);   //101
-        delete t2.id;
-        console.log(t2.id);             //101
+        //因为使用了extend2属性浅拷贝的方法,子类还可以访问父类的属性
+        console.log(t3.uber.name);
 
+        //=============================================
 
         //shallow copy
         function extendCopy(p) {
@@ -98,6 +130,27 @@
             }
             return n;
         }
+
+        function extend2(Child,Parent) {
+            let p = Parent.prototype;
+            let c = Child.prototype;
+            for (let i in p){
+                c[i] = p[i];
+            }
+            c.uber = p;
+            // Child.prototype = Parent;
+            // Child.constructor = Child;
+        }
+        function extend(Child,Parent) {
+            let F = function () {};
+            F.prototype = Parent.prototype;
+            Child.prototype = new F();
+            Child.prototype.constructor = Child;
+            Child.uber = Parent.prototype;
+        }
+
+        //=============================================
+
     </script>
     </body>
 </html>
