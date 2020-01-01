@@ -9,6 +9,8 @@
     <body>
     <script>
         //将属性拷贝给继承的子对象
+        //但仅适用于基础数据类型
+        //所有对象类型只支持引用传递
         function extend2(Child,Parent) {
             let p = Parent.prototype;
             let c = Child.prototype;
