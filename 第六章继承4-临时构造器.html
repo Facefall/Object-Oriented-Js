@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta name="viewpoint" content="width-device-width,initial-scale-1.0">
+        <meta http-equiv="x-ua-compatible" content="ie-edge">
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+    <script>
+
+        function Triangle(side,height) {
+            this.side = side;
+            this.height = height;
+        }
+        function TwoDShape() {}
+        function Shape() {}
+        function F() {}
+
+        Shape.prototype.toString = function () {return this.name;};
+        Shape.prototype.name = 'shape';
+
+        F.prototype = Shape.prototype;
+        let test2 = new F();
+        TwoDShape.prototype = test2;
+        TwoDShape.prototype.constructor = TwoDShape;
+        TwoDShape.prototype.name = '2D Shape';
+
+        let F2 = function(){};
+        F2.prototype = TwoDShape.prototype;
+        let test = new F2();
+        Triangle.prototype = test;
+        Triangle.prototype.constructor = Triangle;
+        Triangle.prototype.name = 'Triangle';
+        Triangle.prototype.getArea = function(){
+            return this.side * this.height;
+        };
+
+        {
+            //如果所有属性都指向了一个对象
+            //父对象就会受子对象属性的影响
+            //son B.__proto__       --> object temp = new F()
+            //object temp.__proto__ --> father A
+            //b-->temp-->A
+
+
+            //可以看到
+            //原本的继承方法是 通过B 找到继承的父对象 B.__proto__ ,
+            // 再通过这个父对象的构造函数 constructor的prototype原型
+            // constructor.prototype.__proto__ 找这个构造器函数继承自哪个对象
+            // B.__proto__.constructor.prototype.(-->) __proto__.constructor.prototype.(-->) __proto__.constructor.prototype. ...
+            // 原来的继承 都是放到构造器函数的原型上的
+            //现在的继承变成:
+            //B.__proto__. __proto__ .__proto__. __proto__
+            //整个过程中没有了prototype,因为继承的这个中间函数代替了构造函数
+            //B.__proto__ = temp
+            //temp.__proto = A
+
+
+        }
+        let my = new Triangle(5,10);
+        //  console.log(my.getArea());
+        //  console.log(my.toString());
+
+        console.log(my.__proto__.constructor);
+        console.log(my.__proto__.__proto__.constructor);
+        console.log(my.__proto__.__proto__.__proto__.constructor);
+
+        console.log(my.__proto__ === test);//true
+        console.log(my.__proto__.__proto__ === test2);//true
+        console.log(my.__proto__.__proto__.__proto__);//shape通过继承自谁? 这里并没有更改Shape的原型对象,创建函数通过文本标识发创建
+        let shape = my.__proto__.__proto__.__proto__;
+        console.log(shape.constructor.prototype.__proto__.constructor);//object
+
+    </script>
+    </body>
+</html>
