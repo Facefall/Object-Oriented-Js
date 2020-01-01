@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta name="viewpoint" content="width-device-width,initial-scale-1.0">
+        <meta http-equiv="x-ua-compatible" content="ie-edge">
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+    <script>
+        //1
+        //每次创建对象,都会单独分配存储空间存储name
+        //但是name值都是一样的
+        //效率低下
+        function Shape() {
+            this.name = 'shape';
+        }
+        //2
+        //于是将这个共享的属性迁移到原型中去
+        Shape.prototype.name = 'shape';
+        //当然,所有对象都共享这个属性,所以该属性一旦更改,其他所有对象都会受影响
+        //一般是把readonly的属性放到这里
+
+        //另外,我们应该先完成继承关系,再进行对这些共享属性的扩展,迁移
+        //否则后续的继承对象的新内容可能会抹掉我们所继承来的东西
+        //例子:
+        function TwoDShape() {
+        }
+        TwoDShape.prototype = new Shape();
+        TwoDShape.prototype.constructor = TwoDShape;
+        TwoDShape.prototype.name = '2D Shape';
+
+        function Triangle(side,height) {
+            this.side = side;
+            this.height = height;
+        }
+        Triangle.prototype = new TwoDShape();
+        Triangle.prototype.constructor = Triangle;
+        Triangle.prototype.name = 'Triangle';
+        Triangle.prototype.getArea = function(){
+            return this.side * this.height;
+        };
+        let Tng = new Triangle(1,2);
+        console.log(Tng.getArea());
+
+
+        console.log(Tng.toString());
+        //与之前的区别是,js的查找操作更多的发生在Shape.prototype中,
+        //而不是到某个具体的被实例化的对象中去
+
+        console.log(Tng.hasOwnProperty('side'));
+        console.log(Tng.hasOwnProperty('name'));
+        console.log(TwoDShape.isPrototypeOf(Tng));
+        console.log(Tng instanceof Shape);
+
+    </script>
+    </body>
+</html>
