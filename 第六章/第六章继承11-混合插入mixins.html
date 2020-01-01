@@ -64,19 +64,20 @@
         //=============================================
 
         //构造器借用
-        // function Shape(id) {
-        //     this.id =id;
-        // }
-        // Shape.prototype.name = 'shape';
-        // Shape.prototype.toString = function () {
-        //     return this.name;
-        // };
-        // function Triangle() {
-        //     Shape.apply(this,arguments)
-        // }
-        // Triangle.prototype.name = 'Triangle';
-        //
-        // let t = new Triangle(101);
+        function Shape_(id) {
+            this.id =id;
+        }
+        Shape_.prototype.name = 'shape';
+        Shape_.prototype.toString = function () {
+            return this.name;
+        };
+        function Triangle_() {
+            Shape_.apply(this,arguments);   //调用父类构造函数
+        }
+        Triangle.prototype = new Shape_(101);//再一次调用父类构造函数
+        Triangle.prototype.name = 'Triangle';
+
+        let t = new Triangle_(202);
         // console.log(t.id);
         // console.log(t.toString());
         //
