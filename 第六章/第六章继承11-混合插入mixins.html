@@ -8,11 +8,45 @@
     </head>
     <body>
     <script>
+        //多重继承
+        function multi(){
+            let n ={},stuff,i=0,len = arguments.length;
+            for ( i = 0; i < len; i++) {
+                stuff = arguments[i];
+                for (let j in stuff){
+                    n[j] = stuff[j];
+                }
+            }
+            return n;
+        }
+
+        let shape = {
+            name : 'shape',
+            toString : function () {
+                return this.name;
+            }
+        };
+
+
         let twoD={
             name:'2D shape',
             dimensions:2
         };
 
+        let triangle_ = multi(shape,twoD,{
+            name:'Triangle',
+            getArea:function () {
+                return this.side * this.height/2;
+            },
+            side:5,
+            height:10
+        });
+        //将前面所有对象的属性拷贝的最后一个传入的对象中
+        //如果前面对象的属性有重复
+        //最后一个对象会覆盖,以最后一个对象为准
+        console.log(triangle_.getArea());
+        console.log(triangle_.dimensions);
+        console.log(triangle_.toString());
 
 
         //寄生式继承
