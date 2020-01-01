@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta name="viewpoint" content="width-device-width,initial-scale-1.0">
+        <meta http-equiv="x-ua-compatible" content="ie-edge">
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+    <script>
+
+        //继承的原型链示例:
+
+        function Shape() {
+            this.name = 'shape';
+            this.toString = function () {
+                return this.name;
+            }
+        }
+        function TwoDShape() {
+            this.name = '2D shape';
+        }
+
+        function Triangle(side,height) {
+            this.name = 'Triangle';
+            this.side = side;
+            this.height = height;
+            this.getArea = function () {
+                return this.side * this.height/2;
+            }
+        }
+        let S = new Shape();
+        TwoDShape.prototype = S;
+        let T = new TwoDShape();
+        Triangle.prototype = T;
+
+        //typeof new TwoDShape(); //-> object
+        //typeof monkey = {}      //-> object
+        //
+        //改变原型同样也会更改构造函数
+        //需要重置
+        TwoDShape.prototype.constructor = TwoDShape;
+        Triangle.prototype.constructor = Triangle;
+
+        let my = new Triangle(1,2);
+        window.my = my;
+
+
+        console.log(my.toString());
+        //内部执行过程:
+        //先从my这个对象里面找
+        //没有toString方法
+        //从__proto__ 也就是继承的父级实体对象找.
+        //my.__proto__ --> T;
+        //TwoDShape的这个对象T
+        //js继续从T这个对象里面找方法,依旧找不到
+        //T.__proto__ --> S
+        //new Shape()这个对象叫S
+        //js从S这里找到了toString方法
+        //该方法最终在my对象中被调用,this指向my
+
+        console.log(my instanceof Shape);
+        console.log(my instanceof TwoDShape);
+        console.log(my instanceof Triangle);
+        //true
+        //true
+        //true
+
+        console.log(Shape.isPrototypeOf(my));
+        console.log(TwoDShape.isPrototypeOf(my));
+        console.log(Triangle.isPrototypeOf(my));
+        //true
+        //true
+        //true
+
+        let S2 = new Shape();
+        console.log(S2.constructor);
+        let T2 = new TwoDShape();
+        console.log(T2.toString());
+    </script>
+    </body>
+</html>
