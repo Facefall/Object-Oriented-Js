@@ -17,7 +17,7 @@
             let p = Parent.prototype;
             let c = Child.prototype;
             for (let i in p){
-                c[i] = p;
+                c[i] = p[i];
             }
             c.uber = p;
         }
