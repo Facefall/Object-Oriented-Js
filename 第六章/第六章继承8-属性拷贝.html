@@ -11,6 +11,8 @@
         //将属性拷贝给继承的子对象
         //但仅适用于基础数据类型
         //所有对象类型只支持引用传递
+
+        //通过属性拷贝的方式进行继承 //需要注意,这只是浅拷贝的方式
         function extend2(Child,Parent) {
             let p = Parent.prototype;
             let c = Child.prototype;
@@ -19,6 +21,7 @@
             }
             c.uber = p;
         }
+        //版本1.0 将原始的手动继承封装成函数
         function extend(Child,Parent) {
             let F = function () {};
             F.prototype = Parent.prototype;
